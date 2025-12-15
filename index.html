@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IoT Dashboard Firebase</title>
+
+  <style>
+    :root {
+      --bgA: #0b1220;
+      --bgB: #0e1a33;
+
+      --glass: rgba(255, 255, 255, .11);
+      --glass2: rgba(255, 255, 255, .07);
+      --line: rgba(255, 255, 255, .16);
+
+      --text: rgba(255, 255, 255, .92);
+      --muted: rgba(255, 255, 255, .65);
+
+      --p1: #6C63FF;
+      --p2: #22D3EE;
+      --p3: #34D399;
+
+      --good: #34D399;
+      --warn: #FBBF24;
+      --bad: #FB7185;
+
+      --shadow: 0 18px 45px rgba(0, 0, 0, .35);
+      --shadow2: 0 12px 28px rgba(0, 0, 0, .22);
+      --r: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 18% 12%, rgba(108, 99, 255, .35), transparent 55%),
+        radial-gradient(1100px 560px at 90% 18%, rgba(34, 211, 238, .28), transparent 55%),
+        radial-gradient(1100px 760px at 55% 96%, rgba(52, 211, 153, .12), transparent 60%),
+        linear-gradient(180deg, var(--bgA), var(--bgB));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -25%;
+      background: conic-gradient(from 180deg at 50% 50%,
+          rgba(108, 99, 255, .10),
+          rgba(34, 211, 238, .10),
+          rgba(52, 211, 153, .08),
+          rgba(108, 99, 255, .10));
+      filter: blur(90px);
+      opacity: .65;
+      pointer-events: none;
+      animation: floaty 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes floaty {
+      from {
+        transform: translate3d(-2%, -1%, 0) scale(1);
+      }
+
+      to {
+        transform: translate3d(2%, 1%, 0) scale(1.05);
+      }
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .phone {
+      width: min(390px, 92vw);
+      border-radius: 38px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(700px 240px at 10% 0%, rgba(108, 99, 255, .18), transparent 60%),
+        radial-gradient(700px 240px at 90% 0%, rgba(34, 211, 238, .15), transparent 60%);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .topbar {
+      padding: 14px 16px 6px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .notch {
+      width: 122px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .26);
+      border: 1px solid rgba(255, 255, 255, .10);
+      opacity: .75;
+    }
+
+    .brand {
+      padding: 10px 18px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 10px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(108, 99, 255, .95), rgba(34, 211, 238, .92));
+      box-shadow: 0 18px 35px rgba(34, 211, 238, .14), 0 18px 35px rgba(108, 99, 255, .12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .65), transparent 45%);
+      transform: rotate(25deg);
+      opacity: .55;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+
+    .sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+
+    .badge {
+      margin: 14px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--warn);
+      box-shadow: 0 0 0 5px rgba(251, 191, 36, .18);
+    }
+
+    .dot.good {
+      background: var(--good);
+      box-shadow: 0 0 0 5px rgba(52, 211, 153, .16);
+    }
+
+    .dot.bad {
+      background: var(--bad);
+      box-shadow: 0 0 0 5px rgba(251, 113, 133, .16);
+    }
+
+    .badge b {
+      font-weight: 900;
+    }
+
+    .badge span {
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .card {
+      padding: 16px 18px 18px;
+      position: relative;
+    }
+
+    .form {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-style: normal;
+      opacity: .85;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .78);
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 12px 12px 36px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(10, 14, 28, .35);
+      color: var(--text);
+      outline: none;
+      transition: .18s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, .42);
+    }
+
+    input:focus {
+      border-color: rgba(34, 211, 238, .45);
+      box-shadow: 0 0 0 4px rgba(34, 211, 238, .14);
+      background: rgba(10, 14, 28, .42);
+    }
+
+    button {
+      border: 0;
+      color: rgba(255, 255, 255, .96);
+      background: linear-gradient(135deg, rgba(108, 99, 255, .95), rgba(34, 211, 238, .90));
+      padding: 12px 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 950;
+      letter-spacing: .2px;
+      box-shadow: 0 18px 35px rgba(34, 211, 238, .12), 0 18px 35px rgba(108, 99, 255, .10);
+      transition: transform .12s ease, filter .12s ease;
+      position: relative;
+    }
+
+    button:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0px) scale(.99);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .16);
+      box-shadow: none;
+      font-weight: 900;
+    }
+
+    .msg {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .08);
+      color: rgba(255, 255, 255, .92);
+      display: none;
+      word-break: break-word;
+      font-size: 12.5px;
+    }
+
+    .msg.error {
+      border-color: rgba(251, 113, 133, .35);
+      background: rgba(251, 113, 133, .12);
+      display: block;
+    }
+
+    .msg.ok {
+      border-color: rgba(52, 211, 153, .28);
+      background: rgba(52, 211, 153, .10);
+      display: block;
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .dashWrap {
+      width: min(1100px, 92vw);
+      margin: 26px auto 52px;
+      display: none;
+      animation: rise .35s ease-out both;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .dashHeader {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .heroLeft {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      min-width: 0;
+    }
+
+    .heroIcon {
+      width: 54px;
+      height: 54px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(52, 211, 153, .95), rgba(34, 211, 238, .92));
+      box-shadow: 0 18px 35px rgba(34, 211, 238, .12), 0 18px 35px rgba(52, 211, 153, .10);
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .heroIcon::after {
+      content: "";
+      position: absolute;
+      inset: -45%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .55), transparent 46%);
+      transform: rotate(18deg);
+      opacity: .6;
+    }
+
+    .heroText {
+      min-width: 0;
+    }
+
+    .heroText h2 {
+      margin: 0;
+      font-size: clamp(20px, 2.6vw, 28px);
+      font-weight: 980;
+      letter-spacing: .2px;
+    }
+
+    .heroText p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 680px;
+    }
+
+    .heroRight {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(0, 0, 0, .18);
+      color: rgba(255, 255, 255, .86);
+      font-size: 12.5px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, .14);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, .35);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, .35);
+      }
+
+      70% {
+        box-shadow: 0 0 0 9px rgba(52, 211, 153, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+      }
+    }
+
+    .heroCard {
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(14px);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heroCard::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(980px 300px at 10% 0%, rgba(108, 99, 255, .18), transparent 60%),
+        radial-gradient(980px 300px at 90% 0%, rgba(34, 211, 238, .14), transparent 60%),
+        radial-gradient(980px 400px at 50% 120%, rgba(52, 211, 153, .10), transparent 65%);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .heroCard::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .12), transparent);
+      transform: translateX(-120%);
+      opacity: .35;
+      pointer-events: none;
+      animation: shine 7s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+
+      0%,
+      55% {
+        transform: translateX(-120%);
+      }
+
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    .heroGrid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      align-items: stretch;
+      margin-bottom: 14px;
+    }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .kpiTitle {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+
+    .kpiSub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .miniRow {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .miniStat {
+      flex: 1 1 180px;
+      min-width: 180px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .06);
+      padding: 12px 12px 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .miniStat::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(520px 160px at 10% 0%, rgba(52, 211, 153, .10), transparent 62%);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .miniStat small {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .ico {
+      width: 22px;
+      height: 22px;
+      border-radius: 9px;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .12);
+      font-size: 12px;
+      opacity: .95;
+    }
+
+    .miniVal {
+      font-size: 24px;
+      font-weight: 980;
+      position: relative;
+      letter-spacing: .2px;
+    }
+
+    .unit {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, .74);
+      margin-left: 6px;
+      font-weight: 900;
+    }
+
+    .actionPanel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .welcome {
+      position: relative;
+      padding: 10px 10px 0;
+    }
+
+    .welcome .hi {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .welcome .name {
+      margin: 4px 0 0;
+      font-weight: 980;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 320px;
+    }
+
+    .tips {
+      position: relative;
+      border-radius: 18px;
+      border: 1px dashed rgba(255, 255, 255, .18);
+      background: rgba(0, 0, 0, .16);
+      padding: 12px;
+      color: rgba(255, 255, 255, .84);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      grid-column: span 6;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      padding: 14px 14px 12px;
+      background: rgba(255, 255, 255, .06);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .18);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, .22);
+    }
+
+    .stat::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(700px 220px at 12% 0%, rgba(52, 211, 153, .12), transparent 62%);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .stat small {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+      letter-spacing: .2px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .value {
+      font-size: 30px;
+      font-weight: 980;
+      line-height: 1.05;
+      position: relative;
+      letter-spacing: .2px;
+    }
+
+    .stat.ts .value {
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    @media (max-width: 900px) {
+      .heroGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .heroText p {
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .dashHeader {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .heroRight {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .stat {
+        grid-column: span 12;
+      }
+
+      .miniStat {
+        min-width: 150px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before {
+        animation: none;
+      }
+
+      * {
+        transition: none !important;
+      }
+
+      .pulse {
+        animation: none;
+      }
+
+      .dashWrap {
+        animation: none;
+      }
+
+      .heroCard::after {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="loginScreen" class="screen">
+    <div class="phone">
+      <div class="topbar">
+        <div class="notch" aria-hidden="true"></div>
+      </div>
+
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>IoT Dashboard</h1>
+        <p class="sub">Login untuk melihat data sensor<br />secara realtime dari Firebase</p>
+
+        <div class="badge">
+          <span id="statusDot" class="dot"></span>
+          <b>Status</b>
+          <span id="statusText">menunggu login</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form">
+          <div class="field">
+            <i>✉️</i>
+            <input id="email" type="email" placeholder="Email" autocomplete="username" />
+          </div>
+
+          <div class="field">
+            <i>🔒</i>
+            <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+          </div>
+
+          <button id="loginBtn">Login</button>
+        </div>
+
+        <p id="loginMsg" class="msg"></p>
+        <p class="hint">Pastikan Email/Password Auth aktif di Firebase Console.</p>
+      </div>
+    </div>
+  </section>
+
+  <main id="dashWrap" class="dashWrap">
+    <div class="dashHeader">
+      <div class="heroLeft">
+        <div class="heroIcon" aria-hidden="true"></div>
+        <div class="heroText">
+          <h2>Realtime Sensor Dashboard</h2>
+          <p>Halo <b id="userEmail">user</b> • Data di bawah update otomatis dari Firebase RTDB</p>
+        </div>
+      </div>
+
+      <div class="heroRight">
+        <div class="chip"><span class="pulse"></span> Live</div>
+        <div class="chip">🕒 <span id="lastUpdate">belum ada data</span></div>
+        <button id="logoutBtn" class="secondary">Logout</button>
+      </div>
+    </div>
+
+    <section class="heroCard">
+      <div class="heroGrid">
+        <div class="kpi">
+          <div>
+            <p class="kpiTitle">Overview</p>
+            <p class="kpiSub">Angka di bawah akan berubah dengan animasi halus saat ada data baru.</p>
+          </div>
+
+          <div class="miniRow">
+            <div class="miniStat">
+              <small><span class="ico">🌡️</span> Temperature</small>
+              <div class="miniVal"><span id="tempTop">-</span><span class="unit">°C</span></div>
+            </div>
+
+            <div class="miniStat">
+              <small><span class="ico">💧</span> Humidity</small>
+              <div class="miniVal"><span id="humTop">-</span><span class="unit">%</span></div>
+            </div>
+
+            <div class="miniStat">
+              <small><span class="ico">💡</span> LDR</small>
+              <div class="miniVal"><span id="ldrTop">-</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actionPanel">
+          <div class="welcome">
+            <p class="hi">Selamat datang 👋</p>
+            <p class="name" id="welcomeName">User</p>
+          </div>
+
+          <div class="tips">
+            <b>Tips:</b> Kalau data belum muncul, pastikan ESP32 menulis ke
+            <i>/iot/temp</i>, <i>/iot/hum</i>, <i>/iot/ldr</i>, <i>/iot/ts</i> (path ini tidak ditampilkan ke user
+            biasa).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" style="margin-top:14px;">
+      <div class="stat">
+        <small><span class="ico">🌡️</span> Temperature</small>
+        <div class="value"><span id="temp">-</span><span class="unit">°C</span></div>
+      </div>
+
+      <div class="stat">
+        <small><span class="ico">💧</span> Humidity</small>
+        <div class="value"><span id="hum">-</span><span class="unit">%</span></div>
+      </div>
+
+      <div class="stat">
+        <small><span class="ico">💡</span> LDR (raw ADC)</small>
+        <div class="value"><span id="ldr">-</span></div>
+      </div>
+
+      <div class="stat ts">
+        <small><span class="ico">⏱️</span> Timestamp (ms)</small>
+        <div class="value"><span id="ts">-</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC-wo8PhWb26fGIhi7qNNW4tDW0Y8jKLik",
+      authDomain: "project-iot-172e4.firebaseapp.com",
+      databaseURL: "https://project-iot-172e4-default-rtdb.firebaseio.com",
+      projectId: "project-iot-172e4",
+      storageBucket: "project-iot-172e4.firebasestorage.app",
+      messagingSenderId: "926105515798",
+      appId: "1:926105515798:web:6d766318b2379e161e0237",
+      measurementId: "G-HJTV3HM4C5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const loginScreen = document.getElementById("loginScreen");
+    const loginMsg    = document.getElementById("loginMsg");
+    const statusDot   = document.getElementById("statusDot");
+    const statusText  = document.getElementById("statusText");
+
+    const dashWrap = document.getElementById("dashWrap");
+    const lastUpdateEl = document.getElementById("lastUpdate");
+    const userEmailEl = document.getElementById("userEmail");
+    const welcomeNameEl = document.getElementById("welcomeName");
+
+    const tempEl = document.getElementById("temp");
+    const humEl  = document.getElementById("hum");
+    const ldrEl  = document.getElementById("ldr");
+    const tsEl   = document.getElementById("ts");
+
+    const tempTopEl = document.getElementById("tempTop");
+    const humTopEl  = document.getElementById("humTop");
+    const ldrTopEl  = document.getElementById("ldrTop");
+
+    const PATH_BASE = "iot-test";
+    let listenersAttached = false;
+
+    function setStatus(mode, text){
+      statusText.textContent = text;
+      statusDot.classList.remove("good","bad");
+      if(mode === "good") statusDot.classList.add("good");
+      else if(mode === "bad") statusDot.classList.add("bad");
+    }
+
+    function showMsg(type, text){
+      loginMsg.className = "msg " + (type || "");
+      loginMsg.textContent = text || "";
+      loginMsg.style.display = text ? "block" : "none";
+    }
+
+    function animateNumber(el, to, decimals = 0, duration = 380){
+      if(to === null || to === undefined || to === "-") { el.textContent = "-"; return; }
+      const target = Number(to);
+      if(Number.isNaN(target)) { el.textContent = String(to); return; }
+
+      const from = Number(el.dataset.v ?? el.textContent);
+      const start = performance.now();
+      el.dataset.v = String(target);
+
+      function tick(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = from + (target - from) * eased;
+        el.textContent = decimals ? val.toFixed(decimals) : Math.round(val).toString();
+        if(t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function timeAgo(ms){
+      if(!ms || isNaN(ms)) return "belum ada data";
+      const diff = Date.now() - ms;
+      const s = Math.max(0, Math.floor(diff/1000));
+      if(s < 5) return "baru saja";
+      if(s < 60) return `${s} detik lalu`;
+      const m = Math.floor(s/60);
+      if(m < 60) return `${m} menit lalu`;
+      const h = Math.floor(m/60);
+      return `${h} jam lalu`;
+    }
+
+    let lastLocalUpdate = null;
+    setInterval(() => {
+      lastUpdateEl.textContent = timeAgo(lastLocalUpdate);
+    }, 1000);
+
+    function listenSensorsOnce(){
+      if(listenersAttached) return;
+      listenersAttached = true;
+
+      onValue(ref(db, `${PATH_BASE}/temp`), (snap) => {
+        const v = snap.val();
+        animateNumber(tempEl, v, 1);
+        animateNumber(tempTopEl, v, 1);
+        lastLocalUpdate = Date.now();
+      });
+
+      onValue(ref(db, `${PATH_BASE}/hum` ), (snap) => {
+        const v = snap.val();
+        animateNumber(humEl, v, 1);
+        animateNumber(humTopEl, v, 1);
+        lastLocalUpdate = Date.now();
+      });
+
+      onValue(ref(db, `${PATH_BASE}/ldr` ), (snap) => {
+        const v = snap.val();
+        animateNumber(ldrEl, v, 0);
+        animateNumber(ldrTopEl, v, 0);
+        lastLocalUpdate = Date.now();
+      });
+
+      onValue(ref(db, `${PATH_BASE}/ts`  ), (snap) => {
+        const v = snap.val();
+        tsEl.textContent = (v ?? "-");
+        lastLocalUpdate = Date.now();
+      });
+    }
+
+    // ---------- actions ----------
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      showMsg("", "");
+      setStatus("warn", "memproses login...");
+
+      const email = document.getElementById("email").value.trim();
+      const pass  = document.getElementById("password").value.trim();
+
+      if(!email || !pass){
+        setStatus("bad", "gagal login");
+        showMsg("error", "Email dan password wajib diisi.");
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        showMsg("ok", "Login berhasil. Selamat datang!");
+      } catch (e) {
+        setStatus("bad", "gagal login");
+        showMsg("error", "Login gagal: " + (e?.message || e));
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const email = user.email || "User";
+        userEmailEl.textContent = email;
+        welcomeNameEl.textContent = email;
+
+        loginScreen.style.display = "none";
+        dashWrap.style.display = "block";
+
+        setStatus("good", "login • realtime aktif");
+        showMsg("", "");
+
+        listenSensorsOnce();
+      } else {
+        dashWrap.style.display = "none";
+        loginScreen.style.display = "grid";
+        setStatus("warn", "menunggu login");
+      }
+    });
+  </script>
+</body>
+
+</html>

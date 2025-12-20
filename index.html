@@ -887,6 +887,12 @@
     const ldrTopEl  = document.getElementById("ldrTop");
 
     const PATH_BASE = "M13/soal3";
+    onValue(
+    ref(db, `/${PATH_BASE}/temp`),
+    (snap) => { console.log("temp:", snap.val()); },
+    (err) => { console.error("temp listener error:", err); }
+    );
+
     let listenersAttached = false;
 
     function setStatus(mode, text){

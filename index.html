@@ -10,34 +10,29 @@
     :root {
       --bgA: #0b1220;
       --bgB: #0e1a33;
-
       --glass: rgba(255, 255, 255, .11);
       --glass2: rgba(255, 255, 255, .07);
       --line: rgba(255, 255, 255, .16);
-
       --text: rgba(255, 255, 255, .92);
       --muted: rgba(255, 255, 255, .65);
-
       --p1: #6C63FF;
       --p2: #22D3EE;
       --p3: #34D399;
-
       --good: #34D399;
       --warn: #FBBF24;
       --bad: #FB7185;
-
       --shadow: 0 18px 45px rgba(0, 0, 0, .35);
       --shadow2: 0 12px 28px rgba(0, 0, 0, .22);
       --r: 24px;
     }
 
     * {
-      box-sizing: border-box;
+      box-sizing: border-box
     }
 
     html,
     body {
-      height: 100%;
+      height: 100%
     }
 
     body {
@@ -69,11 +64,11 @@
 
     @keyframes floaty {
       from {
-        transform: translate3d(-2%, -1%, 0) scale(1);
+        transform: translate3d(-2%, -1%, 0) scale(1)
       }
 
       to {
-        transform: translate3d(2%, 1%, 0) scale(1.05);
+        transform: translate3d(2%, 1%, 0) scale(1.05)
       }
     }
 
@@ -81,7 +76,7 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 18px;
+      padding: 18px
     }
 
     .phone {
@@ -109,7 +104,7 @@
     .topbar {
       padding: 14px 16px 6px;
       display: flex;
-      justify-content: center;
+      justify-content: center
     }
 
     .notch {
@@ -118,13 +113,13 @@
       border-radius: 999px;
       background: rgba(0, 0, 0, .26);
       border: 1px solid rgba(255, 255, 255, .10);
-      opacity: .75;
+      opacity: .75
     }
 
     .brand {
       padding: 10px 18px 0;
       text-align: center;
-      position: relative;
+      position: relative
     }
 
     .logo {
@@ -144,20 +139,20 @@
       inset: -40%;
       background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .65), transparent 45%);
       transform: rotate(25deg);
-      opacity: .55;
+      opacity: .55
     }
 
     h1 {
       margin: 0;
       font-size: 18px;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     .sub {
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 12.5px;
-      line-height: 1.4;
+      line-height: 1.4
     }
 
     .badge {
@@ -179,41 +174,41 @@
       height: 10px;
       border-radius: 999px;
       background: var(--warn);
-      box-shadow: 0 0 0 5px rgba(251, 191, 36, .18);
+      box-shadow: 0 0 0 5px rgba(251, 191, 36, .18)
     }
 
     .dot.good {
       background: var(--good);
-      box-shadow: 0 0 0 5px rgba(52, 211, 153, .16);
+      box-shadow: 0 0 0 5px rgba(52, 211, 153, .16)
     }
 
     .dot.bad {
       background: var(--bad);
-      box-shadow: 0 0 0 5px rgba(251, 113, 133, .16);
+      box-shadow: 0 0 0 5px rgba(251, 113, 133, .16)
     }
 
     .badge b {
-      font-weight: 900;
+      font-weight: 900
     }
 
     .badge span {
       color: var(--muted);
-      font-size: 12.5px;
+      font-size: 12.5px
     }
 
     .card {
       padding: 16px 18px 18px;
-      position: relative;
+      position: relative
     }
 
     .form {
       display: grid;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 12px
     }
 
     .field {
-      position: relative;
+      position: relative
     }
 
     .field i {
@@ -225,7 +220,7 @@
       opacity: .85;
       font-size: 14px;
       color: rgba(255, 255, 255, .78);
-      pointer-events: none;
+      pointer-events: none
     }
 
     input {
@@ -240,13 +235,13 @@
     }
 
     input::placeholder {
-      color: rgba(255, 255, 255, .42);
+      color: rgba(255, 255, 255, .42)
     }
 
     input:focus {
       border-color: rgba(34, 211, 238, .45);
       box-shadow: 0 0 0 4px rgba(34, 211, 238, .14);
-      background: rgba(10, 14, 28, .42);
+      background: rgba(10, 14, 28, .42)
     }
 
     button {
@@ -265,18 +260,18 @@
 
     button:hover {
       filter: brightness(1.06);
-      transform: translateY(-1px);
+      transform: translateY(-1px)
     }
 
     button:active {
-      transform: translateY(0px) scale(.99);
+      transform: translateY(0px) scale(.99)
     }
 
     button.secondary {
       background: rgba(255, 255, 255, .10);
       border: 1px solid rgba(255, 255, 255, .16);
       box-shadow: none;
-      font-weight: 900;
+      font-weight: 900
     }
 
     .msg {
@@ -294,13 +289,13 @@
     .msg.error {
       border-color: rgba(251, 113, 133, .35);
       background: rgba(251, 113, 133, .12);
-      display: block;
+      display: block
     }
 
     .msg.ok {
       border-color: rgba(52, 211, 153, .28);
       background: rgba(52, 211, 153, .10);
-      display: block;
+      display: block
     }
 
     .hint {
@@ -308,25 +303,25 @@
       color: var(--muted);
       font-size: 12px;
       text-align: center;
-      line-height: 1.4;
+      line-height: 1.4
     }
 
     .dashWrap {
       width: min(1100px, 92vw);
       margin: 26px auto 52px;
       display: none;
-      animation: rise .35s ease-out both;
+      animation: rise .35s ease-out both
     }
 
     @keyframes rise {
       from {
         transform: translateY(10px);
-        opacity: 0;
+        opacity: 0
       }
 
       to {
         transform: translateY(0);
-        opacity: 1;
+        opacity: 1
       }
     }
 
@@ -335,14 +330,14 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 14px;
-      margin-bottom: 14px;
+      margin-bottom: 14px
     }
 
     .heroLeft {
       display: flex;
       gap: 12px;
       align-items: flex-end;
-      min-width: 0;
+      min-width: 0
     }
 
     .heroIcon {
@@ -362,18 +357,18 @@
       inset: -45%;
       background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .55), transparent 46%);
       transform: rotate(18deg);
-      opacity: .6;
+      opacity: .6
     }
 
     .heroText {
-      min-width: 0;
+      min-width: 0
     }
 
     .heroText h2 {
       margin: 0;
       font-size: clamp(20px, 2.6vw, 28px);
       font-weight: 980;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     .heroText p {
@@ -384,7 +379,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 680px;
+      max-width: 680px
     }
 
     .heroRight {
@@ -392,7 +387,7 @@
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: flex-end
     }
 
     .chip {
@@ -417,20 +412,20 @@
       border-radius: 999px;
       background: var(--good);
       box-shadow: 0 0 0 0 rgba(52, 211, 153, .35);
-      animation: pulse 1.2s ease-in-out infinite;
+      animation: pulse 1.2s ease-in-out infinite
     }
 
     @keyframes pulse {
       0% {
-        box-shadow: 0 0 0 0 rgba(52, 211, 153, .35);
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, .35)
       }
 
       70% {
-        box-shadow: 0 0 0 9px rgba(52, 211, 153, 0);
+        box-shadow: 0 0 0 9px rgba(52, 211, 153, 0)
       }
 
       100% {
-        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0)
       }
     }
 
@@ -445,75 +440,40 @@
       overflow: hidden;
     }
 
-    .heroCard::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background:
-        radial-gradient(980px 300px at 10% 0%, rgba(108, 99, 255, .18), transparent 60%),
-        radial-gradient(980px 300px at 90% 0%, rgba(34, 211, 238, .14), transparent 60%),
-        radial-gradient(980px 400px at 50% 120%, rgba(52, 211, 153, .10), transparent 65%);
-      opacity: .9;
-      pointer-events: none;
-    }
-
-    .heroCard::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .12), transparent);
-      transform: translateX(-120%);
-      opacity: .35;
-      pointer-events: none;
-      animation: shine 7s ease-in-out infinite;
-    }
-
-    @keyframes shine {
-
-      0%,
-      55% {
-        transform: translateX(-120%);
-      }
-
-      100% {
-        transform: translateX(120%);
-      }
-    }
-
     .heroGrid {
       position: relative;
       display: grid;
       grid-template-columns: 1.2fr .8fr;
       gap: 14px;
       align-items: stretch;
-      margin-bottom: 14px;
+      margin-bottom: 14px
     }
 
     .kpi {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      position: relative;
+      position: relative
     }
 
     .kpiTitle {
       margin: 0;
       font-size: 14px;
       font-weight: 950;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     .kpiSub {
       margin: 4px 0 0;
       color: var(--muted);
-      font-size: 12.5px;
+      font-size: 12.5px
     }
 
     .miniRow {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 10px
     }
 
     .miniStat {
@@ -528,15 +488,6 @@
       overflow: hidden;
     }
 
-    .miniStat::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background: radial-gradient(520px 160px at 10% 0%, rgba(52, 211, 153, .10), transparent 62%);
-      opacity: .9;
-      pointer-events: none;
-    }
-
     .miniStat small {
       display: flex;
       align-items: center;
@@ -544,7 +495,7 @@
       color: var(--muted);
       font-size: 12px;
       position: relative;
-      margin-bottom: 8px;
+      margin-bottom: 8px
     }
 
     .ico {
@@ -556,67 +507,27 @@
       background: rgba(255, 255, 255, .10);
       border: 1px solid rgba(255, 255, 255, .12);
       font-size: 12px;
-      opacity: .95;
+      opacity: .95
     }
 
     .miniVal {
       font-size: 24px;
       font-weight: 980;
       position: relative;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     .unit {
       font-size: 12.5px;
       color: rgba(255, 255, 255, .74);
       margin-left: 6px;
-      font-weight: 900;
-    }
-
-    .actionPanel {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .welcome {
-      position: relative;
-      padding: 10px 10px 0;
-    }
-
-    .welcome .hi {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12.5px;
-    }
-
-    .welcome .name {
-      margin: 4px 0 0;
-      font-weight: 980;
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 320px;
-    }
-
-    .tips {
-      position: relative;
-      border-radius: 18px;
-      border: 1px dashed rgba(255, 255, 255, .18);
-      background: rgba(0, 0, 0, .16);
-      padding: 12px;
-      color: rgba(255, 255, 255, .84);
-      font-size: 13px;
-      line-height: 1.4;
+      font-weight: 900
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
+      gap: 12px
     }
 
     .stat {
@@ -628,23 +539,6 @@
       box-shadow: 0 12px 26px rgba(0, 0, 0, .18);
       position: relative;
       overflow: hidden;
-      transform: translateY(0);
-      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-    }
-
-    .stat:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.03);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, .22);
-    }
-
-    .stat::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background: radial-gradient(700px 220px at 12% 0%, rgba(52, 211, 153, .12), transparent 62%);
-      opacity: .9;
-      pointer-events: none;
     }
 
     .stat small {
@@ -655,7 +549,7 @@
       font-size: 12.5px;
       letter-spacing: .2px;
       margin-bottom: 8px;
-      position: relative;
+      position: relative
     }
 
     .value {
@@ -663,81 +557,74 @@
       font-weight: 980;
       line-height: 1.05;
       position: relative;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     .stat.ts .value {
       font-size: 20px;
-      font-weight: 950;
+      font-weight: 950
     }
 
-    @media (max-width: 900px) {
+    @media (max-width:900px) {
       .heroGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .heroText p {
-        white-space: normal;
+        white-space: normal
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width:720px) {
       .dashHeader {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: flex-start
       }
 
       .heroRight {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: flex-start
       }
 
       .stat {
-        grid-column: span 12;
+        grid-column: span 12
       }
 
       .miniStat {
-        min-width: 150px;
+        min-width: 150px
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion:reduce) {
       body::before {
-        animation: none;
+        animation: none
       }
 
       * {
-        transition: none !important;
+        transition: none !important
       }
 
       .pulse {
-        animation: none;
+        animation: none
       }
 
       .dashWrap {
-        animation: none;
-      }
-
-      .heroCard::after {
-        animation: none;
+        animation: none
       }
     }
   </style>
 </head>
 
 <body>
-
   <section id="loginScreen" class="screen">
     <div class="phone">
       <div class="topbar">
         <div class="notch" aria-hidden="true"></div>
       </div>
-
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <h1>IoT Dashboard</h1>
         <p class="sub">Login untuk melihat data sensor<br />secara realtime dari Firebase</p>
-
         <div class="badge">
           <span id="statusDot" class="dot"></span>
           <b>Status</b>
@@ -751,12 +638,10 @@
             <i>✉️</i>
             <input id="email" type="email" placeholder="Email" autocomplete="username" />
           </div>
-
           <div class="field">
             <i>🔒</i>
             <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
           </div>
-
           <button id="loginBtn">Login</button>
         </div>
 
@@ -793,18 +678,18 @@
 
           <div class="miniRow">
             <div class="miniStat">
-              <small><span class="ico">🌡️</span> Temperature</small>
+              <small><span class="ico">🌡️</span> Suhu</small>
               <div class="miniVal"><span id="tempTop">-</span><span class="unit">°C</span></div>
             </div>
 
             <div class="miniStat">
-              <small><span class="ico">💧</span> Humidity</small>
+              <small><span class="ico">💧</span> Kelembaban</small>
               <div class="miniVal"><span id="humTop">-</span><span class="unit">%</span></div>
             </div>
 
             <div class="miniStat">
-              <small><span class="ico">💡</span> LDR</small>
-              <div class="miniVal"><span id="ldrTop">-</span></div>
+              <small><span class="ico">💡</span> Cahaya</small>
+              <div class="miniVal"><span id="lightTop">-</span></div>
             </div>
           </div>
         </div>
@@ -816,9 +701,9 @@
           </div>
 
           <div class="tips">
-            <b>Tips:</b> Kalau data belum muncul, pastikan ESP32 menulis ke
-            <i>/iot/temp</i>, <i>/iot/hum</i>, <i>/iot/ldr</i>, <i>/iot/ts</i> (path ini tidak ditampilkan ke user
-            biasa).
+            <b>Path RTDB:</b>
+            <i>/soal3/suhu</i>, <i>/soal3/kelembaban</i>, <i>/soal3/cahaya</i>, <i>/soal3/gerakan</i>,
+            <i>/soal3/timestamp</i>
           </div>
         </div>
       </div>
@@ -826,22 +711,27 @@
 
     <section class="grid" style="margin-top:14px;">
       <div class="stat">
-        <small><span class="ico">🌡️</span> Temperature</small>
+        <small><span class="ico">🌡️</span> Suhu</small>
         <div class="value"><span id="temp">-</span><span class="unit">°C</span></div>
       </div>
 
       <div class="stat">
-        <small><span class="ico">💧</span> Humidity</small>
+        <small><span class="ico">💧</span> Kelembaban</small>
         <div class="value"><span id="hum">-</span><span class="unit">%</span></div>
       </div>
 
       <div class="stat">
-        <small><span class="ico">💡</span> LDR (raw ADC)</small>
-        <div class="value"><span id="ldr">-</span></div>
+        <small><span class="ico">💡</span> Cahaya (raw)</small>
+        <div class="value"><span id="light">-</span></div>
+      </div>
+
+      <div class="stat">
+        <small><span class="ico">🕵️</span> Gerakan</small>
+        <div class="value" style="font-size:22px;"><span id="motion">-</span></div>
       </div>
 
       <div class="stat ts">
-        <small><span class="ico">⏱️</span> Timestamp (ms)</small>
+        <small><span class="ico">⏱️</span> Timestamp</small>
         <div class="value"><span id="ts">-</span></div>
       </div>
     </section>
@@ -867,6 +757,7 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
+    // ===== elements =====
     const loginScreen = document.getElementById("loginScreen");
     const loginMsg    = document.getElementById("loginMsg");
     const statusDot   = document.getElementById("statusDot");
@@ -877,23 +768,21 @@
     const userEmailEl = document.getElementById("userEmail");
     const welcomeNameEl = document.getElementById("welcomeName");
 
-    const tempEl = document.getElementById("temp");
-    const humEl  = document.getElementById("hum");
-    const ldrEl  = document.getElementById("ldr");
-    const tsEl   = document.getElementById("ts");
+    const tempEl  = document.getElementById("temp");
+    const humEl   = document.getElementById("hum");
+    const lightEl = document.getElementById("light");
+    const motionEl= document.getElementById("motion");
+    const tsEl    = document.getElementById("ts");
 
-    const tempTopEl = document.getElementById("tempTop");
-    const humTopEl  = document.getElementById("humTop");
-    const ldrTopEl  = document.getElementById("ldrTop");
+    const tempTopEl  = document.getElementById("tempTop");
+    const humTopEl   = document.getElementById("humTop");
+    const lightTopEl = document.getElementById("lightTop");
 
-    const PATH_BASE = "M13/soal3";
-    onValue(
-    ref(db, `/${PATH_BASE}/temp`),
-    (snap) => { console.log("temp:", snap.val()); },
-    (err) => { console.error("temp listener error:", err); }
-    );
+    // ===== PATH sesuai screenshot =====
+    const PATH_BASE = "soal3";
 
     let listenersAttached = false;
+    let lastLocalUpdate = null;
 
     function setStatus(mode, text){
       statusText.textContent = text;
@@ -939,7 +828,6 @@
       return `${h} jam lalu`;
     }
 
-    let lastLocalUpdate = null;
     setInterval(() => {
       lastUpdateEl.textContent = timeAgo(lastLocalUpdate);
     }, 1000);
@@ -948,32 +836,55 @@
       if(listenersAttached) return;
       listenersAttached = true;
 
-      onValue(ref(db, `${PATH_BASE}/temp`), (snap) => {
-        const v = snap.val();
-        animateNumber(tempEl, v, 1);
-        animateNumber(tempTopEl, v, 1);
-        lastLocalUpdate = Date.now();
-      });
+      const r = (key) => ref(db, `/${PATH_BASE}/${key}`);
 
-      onValue(ref(db, `${PATH_BASE}/hum` ), (snap) => {
-        const v = snap.val();
-        animateNumber(humEl, v, 1);
-        animateNumber(humTopEl, v, 1);
-        lastLocalUpdate = Date.now();
-      });
+      onValue(r("suhu"),
+        (snap) => {
+          const v = snap.val();
+          animateNumber(tempEl, v, 1);
+          animateNumber(tempTopEl, v, 1);
+          lastLocalUpdate = Date.now();
+        },
+        (err) => console.error("suhu listener error:", err)
+      );
 
-      onValue(ref(db, `${PATH_BASE}/ldr` ), (snap) => {
-        const v = snap.val();
-        animateNumber(ldrEl, v, 0);
-        animateNumber(ldrTopEl, v, 0);
-        lastLocalUpdate = Date.now();
-      });
+      onValue(r("kelembaban"),
+        (snap) => {
+          const v = snap.val();
+          animateNumber(humEl, v, 1);
+          animateNumber(humTopEl, v, 1);
+          lastLocalUpdate = Date.now();
+        },
+        (err) => console.error("kelembaban listener error:", err)
+      );
 
-      onValue(ref(db, `${PATH_BASE}/ts`  ), (snap) => {
-        const v = snap.val();
-        tsEl.textContent = (v ?? "-");
-        lastLocalUpdate = Date.now();
-      });
+      onValue(r("cahaya"),
+        (snap) => {
+          const v = snap.val();
+          animateNumber(lightEl, v, 0);
+          animateNumber(lightTopEl, v, 0);
+          lastLocalUpdate = Date.now();
+        },
+        (err) => console.error("cahaya listener error:", err)
+      );
+
+      onValue(r("gerakan"),
+        (snap) => {
+          const v = snap.val();
+          motionEl.textContent = (v ?? "-");
+          lastLocalUpdate = Date.now();
+        },
+        (err) => console.error("gerakan listener error:", err)
+      );
+
+      onValue(r("timestamp"),
+        (snap) => {
+          const v = snap.val();
+          tsEl.textContent = (v ?? "-");
+          lastLocalUpdate = Date.now();
+        },
+        (err) => console.error("timestamp listener error:", err)
+      );
     }
 
     // ---------- actions ----------
@@ -990,10 +901,10 @@
         return;
       }
 
-      try {
+      try{
         await signInWithEmailAndPassword(auth, email, pass);
         showMsg("ok", "Login berhasil. Selamat datang!");
-      } catch (e) {
+      } catch(e){
         setStatus("bad", "gagal login");
         showMsg("error", "Login gagal: " + (e?.message || e));
       }
@@ -1004,7 +915,7 @@
     });
 
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if(user){
         const email = user.email || "User";
         userEmailEl.textContent = email;
         welcomeNameEl.textContent = email;
